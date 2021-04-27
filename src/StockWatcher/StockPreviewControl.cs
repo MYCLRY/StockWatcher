@@ -73,7 +73,11 @@ namespace StockWatcher
                         ic++;
                     }
                 }
-                fT /= ic;
+                if (ic != 0)
+                {
+                    fT /= ic;
+                }
+
                 UpdateStatus($"{(fT > 0 ? "↑" : "↓")}{fT.ToString("P2")}", fT > 0 ? StockColor.Red : StockColor.Green);
                 //UpdateStatus("");
                 return;
