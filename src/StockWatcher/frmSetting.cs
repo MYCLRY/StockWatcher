@@ -19,7 +19,7 @@ namespace StockWatcher
         {
             var list = (from a in StockConfig.StockList
                         select a.Substring(a.Length - 6)).ToList();
-            this.textBoxStockList.Text = string.Join("\r\n", list);
+            this.textBoxStockList.Text = string.Join("\r\n", StockConfig.StockList/*list*/);
         }
 
         private void buttonForAddStock_Click(object sender, EventArgs e)

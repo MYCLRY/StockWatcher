@@ -39,9 +39,10 @@ namespace StockWatcher
             // labelForRefresh
             // 
             this.labelForRefresh.AutoSize = true;
-            this.labelForRefresh.Location = new System.Drawing.Point(12, 18);
+            this.labelForRefresh.Location = new System.Drawing.Point(9, 14);
+            this.labelForRefresh.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelForRefresh.Name = "labelForRefresh";
-            this.labelForRefresh.Size = new System.Drawing.Size(127, 15);
+            this.labelForRefresh.Size = new System.Drawing.Size(101, 12);
             this.labelForRefresh.TabIndex = 3;
             this.labelForRefresh.Text = "刷新间隔（秒）：";
             // 
@@ -53,34 +54,47 @@ namespace StockWatcher
             "5",
             "8",
             "10",
-            "15"});
-            this.comboBoxForRefresh.Location = new System.Drawing.Point(145, 15);
+            "15",
+            "30",
+            "60",
+            "180",
+            "300",
+            "480",
+            "600",
+            "900",
+            "1800",
+            "3600"});
+            this.comboBoxForRefresh.Location = new System.Drawing.Point(109, 12);
+            this.comboBoxForRefresh.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.comboBoxForRefresh.Name = "comboBoxForRefresh";
-            this.comboBoxForRefresh.Size = new System.Drawing.Size(151, 23);
+            this.comboBoxForRefresh.Size = new System.Drawing.Size(114, 20);
             this.comboBoxForRefresh.TabIndex = 4;
             // 
             // labelForList
             // 
             this.labelForList.AutoSize = true;
-            this.labelForList.Location = new System.Drawing.Point(12, 58);
+            this.labelForList.Location = new System.Drawing.Point(9, 46);
+            this.labelForList.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelForList.Name = "labelForList";
-            this.labelForList.Size = new System.Drawing.Size(172, 15);
+            this.labelForList.Size = new System.Drawing.Size(137, 12);
             this.labelForList.TabIndex = 5;
             this.labelForList.Text = "监控列表（一行一个）：";
             // 
             // textBoxStockList
             // 
-            this.textBoxStockList.Location = new System.Drawing.Point(15, 79);
+            this.textBoxStockList.Location = new System.Drawing.Point(11, 63);
+            this.textBoxStockList.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textBoxStockList.Multiline = true;
             this.textBoxStockList.Name = "textBoxStockList";
-            this.textBoxStockList.Size = new System.Drawing.Size(281, 218);
+            this.textBoxStockList.Size = new System.Drawing.Size(212, 175);
             this.textBoxStockList.TabIndex = 6;
             // 
             // buttonSave
             // 
-            this.buttonSave.Location = new System.Drawing.Point(183, 304);
+            this.buttonSave.Location = new System.Drawing.Point(137, 243);
+            this.buttonSave.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(113, 37);
+            this.buttonSave.Size = new System.Drawing.Size(85, 30);
             this.buttonSave.TabIndex = 7;
             this.buttonSave.Text = "保存设置";
             this.buttonSave.UseVisualStyleBackColor = true;
@@ -88,15 +102,16 @@ namespace StockWatcher
             // 
             // frmSetting
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(308, 353);
+            this.ClientSize = new System.Drawing.Size(231, 282);
             this.Controls.Add(this.buttonSave);
             this.Controls.Add(this.textBoxStockList);
             this.Controls.Add(this.labelForList);
             this.Controls.Add(this.comboBoxForRefresh);
             this.Controls.Add(this.labelForRefresh);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmSetting";

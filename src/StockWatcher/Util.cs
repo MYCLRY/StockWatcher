@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace StockWatcher
@@ -31,7 +28,7 @@ namespace StockWatcher
         }
 
         public static string Input(string message, string title = "请输入")
-        { 
+        {
             return Microsoft.VisualBasic.Interaction.InputBox(message, title);
         }
 
@@ -66,6 +63,11 @@ namespace StockWatcher
             if (string.IsNullOrEmpty(code))
             {
                 return null;
+            }
+            if (code.StartsWith("sh") || code.StartsWith("sz"))
+            {
+                code = $"s_{code}";
+                return code;
             }
             var codeStringBuilder = new StringBuilder();
             foreach (var item in code)

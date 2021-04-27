@@ -42,12 +42,12 @@ namespace StockWatcher
             // labelForStatus
             // 
             this.labelForStatus.BackColor = System.Drawing.Color.Transparent;
-            this.labelForStatus.Dock = System.Windows.Forms.DockStyle.Fill;
             this.labelForStatus.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelForStatus.ForeColor = System.Drawing.Color.White;
             this.labelForStatus.Location = new System.Drawing.Point(0, 0);
+            this.labelForStatus.Margin = new System.Windows.Forms.Padding(0);
             this.labelForStatus.Name = "labelForStatus";
-            this.labelForStatus.Size = new System.Drawing.Size(150, 45);
+            this.labelForStatus.Size = new System.Drawing.Size(150, 30);
             this.labelForStatus.TabIndex = 0;
             this.labelForStatus.Text = "正在加载行情";
             this.labelForStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -55,13 +55,14 @@ namespace StockWatcher
             // 
             // StockPreviewControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.SystemColors.Desktop;
             this.Controls.Add(this.labelForStatus);
+            this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "StockPreviewControl";
-            this.Size = new System.Drawing.Size(150, 45);
+            this.Size = new System.Drawing.Size(150, 30);
             this.ResumeLayout(false);
 
         }

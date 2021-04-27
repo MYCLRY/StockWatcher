@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Drawing;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -11,23 +12,27 @@ namespace StockWatcher
         private Timer timer = null;
         private static int currentIndex = -1;
         private static int maxIndex = -1;
+        ConcurrentDictionary<int, float> cdStock = new ConcurrentDictionary<int, float>();
         public StockPreviewControl(CSDeskBand.CSDeskBandWin w)
         {
             CheckForIllegalCrossThreadCalls = false;
+
+
 
             InitializeComponent();
 
             this.ContextMenu = new ContextMenu(new MenuItem[]
             {
-                new MenuItem("联系作者", new EventHandler((s, e) =>
-                {
-                    Util.Info($"QQ: 491217650\r\nGithub: https://github.com/mrhuo\r\nEmail: admin@mrhuo.com", "联系作者");
-                })),
+                //new MenuItem("联系作者", new EventHandler((s, e) =>
+                //{
+                //    Util.Info($"QQ: 491217650\r\nGithub: https://github.com/mrhuo\r\nEmail: admin@mrhuo.com", "联系作者");
+                //})),
                 new MenuItem("设置", new EventHandler((s, e) =>
                 {
                     new frmSetting(this).ShowDialog();
                 })),
             });
+
             ResetTimer();
 
             w.ShowDW(true);
@@ -42,6 +47,7 @@ namespace StockWatcher
                 timer.Dispose();
                 currentIndex = maxIndex = -1;
                 timer = null;
+                cdStock.Clear();
             }
             timer = new Timer()
             {
@@ -54,6 +60,24 @@ namespace StockWatcher
 
         private void Timer_Tick(object sender, EventArgs e)
         {
+            Point point = this.PointToClient(Control.MousePosition);
+            if (point.X > this.ClientSize.Width || point.X < 0 || point.Y > this.ClientSize.Height || point.Y < 0)
+            {
+                float fT = 0.0f;
+                int ic = 0;
+                for (int i = 0; i <= maxIndex; ++i)
+                {
+                    if (cdStock.ContainsKey(i))
+                    {
+                        fT += cdStock[i];
+                        ic++;
+                    }
+                }
+                fT /= ic;
+                UpdateStatus($"{(fT > 0 ? "↑" : "↓")}{fT.ToString("P2")}", fT > 0 ? StockColor.Red : StockColor.Green);
+                //UpdateStatus("");
+                return;
+            }
             LoadSetting();
             if (currentIndex == -1)
             {
@@ -71,8 +95,9 @@ namespace StockWatcher
                     }
                     else
                     {
+                        cdStock[currentIndex] = stockModel.PricePercentAge;
                         labelForStatus.Tag = stockModel;
-                        UpdateStatus($"{stockModel.Name} {stockModel.CurrentPrice.ToString("F2")}\r\n{stockModel.PricePercent}{(stockModel.IsUp ? "↑" : "↓")}", stockModel.IsUp ? StockColor.Red : StockColor.Green);
+                        UpdateStatus($"{stockModel.Name} {stockModel.CurrentPrice.ToString("F2")}\r\n{stockModel.PricePercent}{(stockModel.IsUp ? "↑" : "↓")}{(stockModel.PricePercentAge).ToString("P2")}"/*, stockModel.IsUp ? StockColor.Red : StockColor.Green*/);
                     }
                 });
             }
@@ -93,6 +118,7 @@ namespace StockWatcher
                     labelForStatus.Tag = null;
                     break;
             }
+
             labelForStatus.Text = text;
         }
 
@@ -143,7 +169,8 @@ namespace StockWatcher
                     Code = code.Substring(code.Length - 6),
                     Name = arr[0],
                     CurrentPrice = float.Parse(arr[1]),
-                    PricePercent = float.Parse(arr[2])
+                    PricePercent = float.Parse(arr[2]),
+                    PricePercentAge = float.Parse(arr[3]) / 100
                 };
             }
             catch (Exception ex)
@@ -183,7 +210,8 @@ namespace StockWatcher
                     $"代码：{model.Code}\r\n" +
                     $"名称：{model.Name}\r\n" +
                     $"现价：{model.CurrentPrice}\r\n" +
-                    $"涨跌：{model.PricePercent}"
+                    $"涨跌：{model.PricePercent}" +
+                    $"涨跌百分比：{model.PricePercentAge}"
                 , "查看详情");
             }
         }
@@ -195,6 +223,7 @@ namespace StockWatcher
         public string Name { get; set; }
         public float CurrentPrice { get; set; }
         public float PricePercent { get; set; }
+        public float PricePercentAge { get; set; }
         public bool IsUp
         {
             get
