@@ -13,6 +13,7 @@ namespace StockWatcher
         private static int currentIndex = -1;
         private static int maxIndex = -1;
         ConcurrentDictionary<int, float> cdStock = new ConcurrentDictionary<int, float>();
+        private static float fAverage = 0.0f;
         public StockPreviewControl(CSDeskBand.CSDeskBandWin w)
         {
             CheckForIllegalCrossThreadCalls = false;
@@ -77,8 +78,12 @@ namespace StockWatcher
                 {
                     fT /= ic;
                 }
+                if (fT != fAverage)
+                {
+                    fAverage = fT;
+                    UpdateStatus($"{(fT > 0 ? "↑" : "↓")}{fT.ToString("P2")}", fT > 0 ? StockColor.Red : StockColor.Green);
+                }
 
-                UpdateStatus($"{(fT > 0 ? "↑" : "↓")}{fT.ToString("P2")}", fT > 0 ? StockColor.Red : StockColor.Green);
                 //UpdateStatus("");
                 return;
             }
@@ -89,6 +94,7 @@ namespace StockWatcher
             }
             else
             {
+                fAverage = 0.0f;
                 Task.Run(async () =>
                 {
                     var currentCode = StockConfig.StockList[currentIndex];
